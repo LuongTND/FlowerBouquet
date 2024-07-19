@@ -1,0 +1,120 @@
+﻿<Window
+    x:Class="WpfApp.View.CustomerWindown"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:WpfApp.UserControls"
+    xmlns:vm="clr-namespace:WpfApp.ViewModel"
+    Title="CustomerWindown"
+    Width="1000"
+    Height="800"
+    AllowsTransparency="True"
+    Background="Transparent"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle
+                            Margin="2"
+                            SnapsToDevicePixels="true"
+                            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            StrokeDashArray="1 2"
+                            StrokeThickness="1" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD" />
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
+
+    </Window.Resources>
+
+    <Border BorderThickness="5" CornerRadius="20">
+
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0.0" Color="#F0EB36" />
+                <GradientStop Offset="0.5" Color="#73C269" />
+                <GradientStop Offset="1.0" Color="#1E91A5" />
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid>
+            <Border Background="#212529" CornerRadius="20" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="12*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" HorizontalAlignment="Left">
+
+                    <Border Background="#272B2F" CornerRadius="20,0,0,20" />
+                    <StackPanel Width="228" Height="400">
+                        <RadioButton Command="{Binding HomeCommand}" IsChecked="True" Style="{StaticResource BtnStyle}">
+                            <Grid>
+                                <Image Source="/Images/img_home.png" Style="{StaticResource Image_Style}" />
+                                <TextBlock Style="{StaticResource Text_Style}" Text="Home" />
+                            </Grid>
+
+                        </RadioButton>
+                        <RadioButton Command="{Binding CustomerCommand}" Style="{StaticResource BtnStyle}">
+                            <Grid>
+                                <Image Source="/Images/img_customer.png" Style="{StaticResource Image_Style}" />
+                                <TextBlock Style="{StaticResource Text_Style}" Text="Profile" />
+                            </Grid>
+
+                        </RadioButton>
+
+                        <RadioButton Command="{Binding OrderCommand}" Style="{StaticResource BtnStyle}">
+                            <Grid>
+                                <Image Source="/Images/img_order.png" Style="{StaticResource Image_Style}" />
+                                <TextBlock Style="{StaticResource Text_Style}" Text="Orders" />
+                            </Grid>
+
+                        </RadioButton>
+
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                    </Grid.RowDefinitions>
+                    <Button
+                        x:Name="CloseApp"
+                        Grid.Row="0"
+                        Margin="0,0,10,0"
+                        Click="CloseApp_Click"
+                        Style="{StaticResource ExitApp}" />
+                    <ContentControl x:Name="Pages" Grid.Row="1" Content="{Binding CurrentView}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                                <uc:HomeControls />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
+                                <uc:ProfileControls />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:OrderViewModel}">
+                                <uc:OrderHistoryControls />
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

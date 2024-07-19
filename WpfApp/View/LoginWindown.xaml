@@ -1,0 +1,112 @@
+﻿<Window
+    x:Class="WpfApp.View.LoginWindown"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="LoginWindown"
+    Width="450"
+    Height="419.792"
+    AllowsTransparency="True"
+    Background="Transparent"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle
+                            Margin="2"
+                            SnapsToDevicePixels="true"
+                            Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                            StrokeDashArray="1 2"
+                            StrokeThickness="1" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD" />
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
+
+    </Window.Resources>
+
+    <Border BorderBrush="White" BorderThickness="10" CornerRadius="52">
+
+        <Border BorderThickness="20" CornerRadius="35">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#F0EB36" />
+                    <GradientStop Offset="0.5" Color="#73C269" />
+                    <GradientStop Offset="1.0" Color="#1E91A5" />
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0.0" Color="#F0EB36" />
+                        <GradientStop Offset="0.5" Color="#73C269" />
+                        <GradientStop Offset="1.0" Color="#1E91A5" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <Button Click="Button_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <materialDesign:PackIcon Width="40" Height="34" HorizontalAlignment="Right" Kind="CloseCircle" />
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <TextBlock
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Arial"
+                        FontSize="40"
+                        FontWeight="Bold"
+                        Foreground="#FF534C4C"
+                        Text="Sign in"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="20,0,20,0">
+                    <TextBox VerticalAlignment="Center" materialDesign:HintAssist.Hint="Username" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Username}" />
+                    <PasswordBox
+                        x:Name="txtPasswordbox"
+                        materialDesign:HintAssist.Foreground="Green"
+                        materialDesign:HintAssist.Hint="Password"
+                        materialDesign:TextFieldAssist.UnderlineBrush="Green"
+                        Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                    <TextBlock Margin="0,5,0,0" HorizontalAlignment="Center" Foreground="red" Text="{Binding Message}" />
+                    <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button
+                            Width="100"
+                            Command="{Binding LoginCommand}"
+                            CommandParameter="{Binding ElementName=txtPasswordbox}"
+                            Content="Sign In"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryButton}"
+                            ToolTip="Resource name: MaterialDesignRaisedSecondaryButton" />
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Border>
+</Window>

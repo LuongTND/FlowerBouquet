@@ -1,0 +1,217 @@
+﻿<UserControl
+    x:Class="WpfApp.UserControls.ManageCustomerControls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:WpfApp.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp.UserControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:WpfApp.UserControls"
+    xmlns:vm="clr-namespace:WpfApp.ViewModel"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:IntConverter x:Key="IntConverter" />
+    </UserControl.Resources>
+    <Grid>
+
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="List">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="15*" />
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Button Width="100" Margin="20,0,20,0" Command="{Binding UpdateCommand}" Content="Updata" />
+                        <Button
+                            Width="100"
+                            Margin="10,0,20,0"
+                            Background="#FFFF3368"
+                            Command="{Binding DeleteCommand}"
+                            Content="Delete" />
+                        <TextBox
+                            Width="350"
+                            Margin="30,10,0,10"
+                            materialDesign:HintAssist.Hint="Search"
+                            Foreground="White"
+                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                            Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" />
+
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBox
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Id"
+                                    Foreground="White"
+                                    IsReadOnly="True"
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    Text="{Binding SelectedItem.CustomerId, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" />
+                                <TextBox
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Email"
+                                    Foreground="White"
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    Text="{Binding SelectedItem.Email, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    Foreground="White"
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    Text="{Binding SelectedItem.CustomerName, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBox
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="City"
+                                    Foreground="White"
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    Text="{Binding SelectedItem.City, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Country"
+                                    Foreground="White"
+                                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                    Text="{Binding SelectedItem.Country, UpdateSourceTrigger=PropertyChanged}" />
+
+                                <DatePicker
+                                    Margin="20"
+                                    materialDesign:HintAssist.Hint="Birthday"
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    Foreground="White"
+                                    SelectedDate="{Binding SelectedItem.Birthday, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                            </StackPanel>
+
+                        </Grid>
+                    </Grid>
+                    <DataGrid
+                        Grid.Row="2"
+                        Margin="0,0,20,0"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Customers}"
+                        SelectedItem="{Binding SelectedItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding CustomerId, UpdateSourceTrigger=PropertyChanged}" Header="Customer Id" />
+                            <DataGridTextColumn Binding="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged}" Header="Name" />
+                            <DataGridTextColumn Width="120" Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Header="Email" />
+                            <DataGridTextColumn Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" Header="City" />
+                            <DataGridTextColumn Binding="{Binding Country, UpdateSourceTrigger=PropertyChanged}" Header="Country" />
+                            <DataGridTemplateColumn Header="Birthday">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker materialDesign:HintAssist.Hint="Birthday" materialDesign:TextFieldAssist.HasClearButton="True" SelectedDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock
+                        Grid.Row="3"
+                        HorizontalAlignment="Center"
+                        FontSize="30"
+                        Foreground="Yellow"
+                        Text="{Binding Message}" />
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Create">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBox
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="Customer Id"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Customer.CustomerId, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntConverter}}" />
+                            <TextBox
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="Email"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Customer.Email, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="Customer Name"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Customer.CustomerName, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBox
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="City"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Customer.City, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="Country"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Customer.Country, UpdateSourceTrigger=PropertyChanged}" />
+                            <PasswordBox
+                                x:Name="txtPassword"
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="Password"
+                                Foreground="White"
+                                Password=""
+                                PasswordChanged="txtPassword_PasswordChanged"
+                                Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                            <DatePicker
+                                Margin="20"
+                                materialDesign:HintAssist.Hint="Birthday"
+                                materialDesign:TextFieldAssist.HasClearButton="True"
+                                Foreground="White"
+                                SelectedDate="{Binding Customer.Birthday, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                        </StackPanel>
+                        <TextBlock
+                            Grid.ColumnSpan="2"
+                            Margin="0,0,0,100"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            FontSize="20"
+                            Foreground="Wheat"
+                            Text="{Binding Message}" />
+                        <Button
+                            Grid.ColumnSpan="2"
+                            Width="150"
+                            Margin="0,0,0,50"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding AddCommand}"
+                            CommandParameter="{Binding ElementName=txtPassword}"
+                            Content="Create"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                            Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                            ToolTip="MaterialDesignFlatSecondaryDarkBgButton" />
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</UserControl>
